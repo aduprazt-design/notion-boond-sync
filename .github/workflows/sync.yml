@@ -1,0 +1,29 @@
+name: Notion -> Boond Sync
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Toutes les heures
+  workflow_dispatch:       # Lancement manuel possible
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests PyJWT
+
+      - name: Run sync
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          BOOND_USER_TOKEN: ${{ secrets.BOOND_USER_TOKEN }}
+          BOOND_CLIENT_TOKEN: ${{ secrets.BOOND_CLIENT_TOKEN }}
+          BOOND_CLIENT_KEY: ${{ secrets.BOOND_CLIENT_KEY }}
+        run: python notion_to_boond.py
