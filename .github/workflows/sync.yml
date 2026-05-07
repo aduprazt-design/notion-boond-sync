@@ -2,8 +2,8 @@ name: Notion -> Boond Sync
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Toutes les heures
-  workflow_dispatch:       # Lancement manuel possible
+    - cron: '*/5 * * * *'  # Toutes les 5 minutes
+  workflow_dispatch:
 
 jobs:
   sync:
